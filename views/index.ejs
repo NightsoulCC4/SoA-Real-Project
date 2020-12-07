@@ -19,26 +19,34 @@
         <a class="navbar-brand" href="/">
             <img src="/imgs/icon.png" height="60px" alt="no img">
         </a>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link " href="/">Home</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-		   			สถานการณ์Covid-19
-		 		</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="thailand">ประเทศไทย</a>
-                    <a class="dropdown-item" href="Country">ต่างประเทศ</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="Map">พื้นที่พบผู้ติดเชื้อ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="protect">การป้องกัน</a>
-            </li>
-        </ul>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link " href="/">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                           สถานการณ์Covid-19
+                     </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="thailand">ประเทศไทย</a>
+                        <a class="dropdown-item" href="Country">ต่างประเทศ</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Map">พื้นที่พบผู้ติดเชื้อ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="protect">การป้องกัน</a>
+                </li>
+            </ul>
+        </div>
+        <div style="text-align:right;">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
     </nav>
 
     <div class=" container ">

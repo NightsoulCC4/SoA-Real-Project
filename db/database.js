@@ -3,7 +3,7 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'postgres',
-    password: 'tontal1705',
+    password: 'C4DICK33',
     port: 5432,
 })
 
@@ -84,8 +84,8 @@ const getTotalDeath = async() => {
     }
 }
 
-const getLatLong = async() => {
-    const sql = `select "Province/State" as State , "Country/Region" as Country, lat , long from covid19_death_csv`
+const getLatLongCon = async() => {
+    const sql = `select "Province/State" as State , "Country/Region" as Country, lat , long , "3/23/20" as value from covid19_confirmed_csv`
     try {
         const data = await pool.query(sql);
         return data;
@@ -183,6 +183,18 @@ const getLatLongTH = async() => {
         return null;
     }
 }
+
+const Search = async(searchInfo) => {
+    const sql = `select * from covid19_confirmed_csv ccc where "Country/Region" like '%` + searchInfo + `%'`
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+}
+
 module.exports = {
     getAllCountry,
     getAllConfirmed,
@@ -191,7 +203,7 @@ module.exports = {
     getTotalConfirm,
     getTotalRecovered,
     getTotalDeath,
-    getLatLong,
+    getLatLongCon,
 
     getAllCountryTH,
     getAllConfirmedTH,
@@ -201,5 +213,7 @@ module.exports = {
     getTotalRecoveredTH,
     getTotalDeathTH,
     getLatLongTH,
+
+    Search,
 
 }
