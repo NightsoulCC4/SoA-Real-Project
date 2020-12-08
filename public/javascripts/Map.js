@@ -11,52 +11,43 @@ const getMap = (data, allcountries) => {
 
     for (const key in parseData) {
         if (parseData[key].value == null) {
-            L.circle([parseData[key].lat, parseData[key].long], {
-                color: 'red',
-                fillColor: '#b30000',
-                fillOpacity: 0.5,
-                radius: 200000
-            }).bindPopup(`<b>${parseCountries[key].state} </b><b>${parseCountries[key].country}</b>
-            <br>confirmed:${parseCountries[key].confirmed}
-            <br>recovered:${parseCountries[key].recovered}
-            <br>death:${parseCountries[key].death}`).addTo(map);
+            
+            const color = 'red';
+            const fillColor = 'b30000';
+            
+            Circle(color, fillColor, parseData, parseCountries, key);
         }
         else if (parseData[key].value >= 5000) {
-            L.circle([parseData[key].lat, parseData[key].long], {
-                color: 'red',
-                fillColor: '#f03',
-                fillOpacity: 0.5,
-                radius: 200000
-            })
-            .bindPopup(`<b>${parseCountries[key].state} </b><b>${parseCountries[key].country}</b>
-            <br>confirmed:${parseCountries[key].confirmed}
-            <br>recovered:${parseCountries[key].recovered}
-            <br>death:${parseCountries[key].death}`).addTo(map);
+
+            const color = 'red';
+            const fillColor = '#f03';
+            
+            Circle(color, fillColor, parseData, parseCountries, key);
         }
         else if (parseData[key].value < 5000 && parseData[key].value >= 500) {
-            L.circle([parseData[key].lat, parseData[key].long], {
-                color: 'orange',
-                fillColor: '#ffa64d',
-                fillOpacity: 0.5,
-                radius: 200000
-            })
-            .bindPopup(`<b>${parseCountries[key].state} </b><b>${parseCountries[key].country}</b>
-            <br>confirmed:${parseCountries[key].confirmed}
-            <br>recovered:${parseCountries[key].recovered}
-            <br>death:${parseCountries[key].death}`)
-            .addTo(map);
+
+            const color = 'orange';
+            const fillColor = '#ffa64d';
+            
+            Circle(color, fillColor, parseData, parseCountries, key);
         } else if (parseData[key].value < 500) {
-            L.circle([parseData[key].lat, parseData[key].long], {
-                color: 'green',
-                fillColor: '#33cc33',
-                fillOpacity: 0.5,
-                radius: 200000
-            })
-            .bindPopup(`<b>${parseCountries[key].state} </b><b>${parseCountries[key].country}</b>
-            <br>confirmed:${parseCountries[key].confirmed}
-            <br>recovered:${parseCountries[key].recovered}
-            <br>death:${parseCountries[key].death}`)
-            .addTo(map);
-        }
+
+            const color = 'green';
+            const fillColor = '#33cc33';
+            
+            Circle(color, fillColor, parseData, parseCountries, key);
     }
+    function Circle(color, fillColor,  parseData, parseCountries, key){
+    
+        L.circle([parseData[key].lat, parseData[key].long], {
+            color: color,
+            fillColor: fillColor,
+            fillOpacity: 0.5,
+            radius: 200000
+        }).bindPopup(`<b>${parseCountries[key].state} </b><b>${parseCountries[key].country}</b>
+        <br>confirmed:${parseCountries[key].confirmed}
+        <br>recovered:${parseCountries[key].recovered}
+        <br>death:${parseCountries[key].death}`).addTo(map);
+    }
+}
 }
