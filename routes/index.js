@@ -27,27 +27,13 @@ router.get('/map', async function(req, res, next) {
     const totalDeath = await db.getTotalDeath();
     const getLatLongCon = await db.getLatLongCon();
 
-    const objectTotal = {
-        totalConfirmed: totalConfirmed.rows[0].confirmed,
-        totalRecovered: totalRecovered.rows[0].recovered,
-        totalDeath: totalDeath.rows[0].death
-    }
-    res.render('map', { totalObject: objectTotal, Maps: getLatLongCon.rows });
-});
-
-router.get('/protect', async function(req, res, next) {
-    res.render('protect');
-});
-
-
-
-router.get('/country', async function(req, res, next) {
     const result = await db.getAllCountry();
     const confirmed = await db.getAllConfirmed();
     const recovered = await db.getAllRecovered();
     const death = await db.getAllDeath();
 
     let objectCountry = [];
+
     for (const key in result.rows) {
         objectCountry[key] = {
             state: result.rows[key].state,
@@ -57,7 +43,35 @@ router.get('/country', async function(req, res, next) {
             death: death.rows[key].confirmed
         }
     }
-    res.render('country', { countrys: objectCountry });
+
+    const objectTotal = {
+        totalConfirmed: totalConfirmed.rows[0].confirmed,
+        totalRecovered: totalRecovered.rows[0].recovered,
+        totalDeath: totalDeath.rows[0].death
+    }
+    res.render('map', { totalObject: objectTotal, Maps: getLatLongCon.rows, objCountry: objectCountry });
+});
+
+router.get('/protect', async function(req, res, next) {
+    res.render('protect');
+});
+
+router.get('/country', async function(req, res, next) {
+    const allCountries = await db.GetAllCountries();
+    const allCountriesRecovered = await db.GetAllCountriesRecovered();
+    const allCountriesDeath = await db.GetAllCountriesDeath();
+
+    let objectCountries = [];
+    for (const key in allCountries.rows) {
+        objectCountries[key] = {
+            state: allCountries.rows[key].state,
+            country: allCountries.rows[key].country,
+            confirmed: allCountries.rows[key].confirmed,
+            recovered: allCountriesRecovered.rows[key].confirmed,
+            death: allCountriesDeath.rows[key].confirmed
+        }
+    }
+    res.render('country', { countrys: objectCountries });
 });
 
 router.get('/thailand', async function(req, res, next) {
@@ -78,8 +92,5 @@ router.get('/thailand', async function(req, res, next) {
     }
     res.render('thailand', { countrys: objectCountry });
 });
-
-
-
 
 module.exports = router;

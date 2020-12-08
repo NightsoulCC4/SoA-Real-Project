@@ -7,7 +7,7 @@ const pool = new Pool({
     port: 5432,
 })
 
-const getAllCountry = async() => {
+const getAllCountry = async () => {
     const sql = `SELECT "Province/State" as State , "Country/Region" as Country from covid19_confirmed_csv`
     try {
         const data = await pool.query(sql);
@@ -18,7 +18,7 @@ const getAllCountry = async() => {
     }
 }
 
-const getAllConfirmed = async() => {
+const getAllConfirmed = async () => {
     const sql = `select "3/23/20" as Confirmed from covid19_confirmed_csv`
     try {
         const data = await pool.query(sql);
@@ -29,7 +29,7 @@ const getAllConfirmed = async() => {
     }
 }
 
-const getAllRecovered = async() => {
+const getAllRecovered = async () => {
     const sql = `select "3/23/20" as Confirmed from covid19_recovered_csv`
     try {
         const data = await pool.query(sql);
@@ -40,7 +40,7 @@ const getAllRecovered = async() => {
     }
 }
 
-const getAllDeath = async() => {
+const getAllDeath = async () => {
     const sql = `select "3/23/20" as Confirmed from covid19_death_csv`
     try {
         const data = await pool.query(sql);
@@ -51,7 +51,7 @@ const getAllDeath = async() => {
     }
 }
 
-const getTotalConfirm = async() => {
+const getTotalConfirm = async () => {
     const sql = `select sum("3/23/20") as confirmed from covid19_confirmed_csv`
     try {
         const data = await pool.query(sql);
@@ -62,7 +62,7 @@ const getTotalConfirm = async() => {
     }
 }
 
-const getTotalRecovered = async() => {
+const getTotalRecovered = async () => {
     const sql = `select sum("3/23/20") as recovered from covid19_recovered_csv`
     try {
         const data = await pool.query(sql);
@@ -73,7 +73,7 @@ const getTotalRecovered = async() => {
     }
 }
 
-const getTotalDeath = async() => {
+const getTotalDeath = async () => {
     const sql = `select sum("3/23/20") as death from covid19_death_csv`
     try {
         const data = await pool.query(sql);
@@ -84,7 +84,7 @@ const getTotalDeath = async() => {
     }
 }
 
-const getLatLongCon = async() => {
+const getLatLongCon = async () => {
     const sql = `select "Province/State" as State , "Country/Region" as Country, lat , long , "3/23/20" as value from covid19_confirmed_csv`
     try {
         const data = await pool.query(sql);
@@ -96,7 +96,7 @@ const getLatLongCon = async() => {
 }
 
 //Thailand//
-const getAllCountryTH = async() => {
+const getAllCountryTH = async () => {
     const sql = `SELECT "Province/State" as State , "Country/Region" as Country from covid19_confirmed_csv where "Country/Region" like 'Thailand'`
     try {
         const data = await pool.query(sql);
@@ -107,7 +107,7 @@ const getAllCountryTH = async() => {
     }
 }
 
-const getAllConfirmedTH = async() => {
+const getAllConfirmedTH = async () => {
     const sql = `select "3/23/20" as Confirmed from covid19_confirmed_csv where "Country/Region" like 'Thailand'`
     try {
         const data = await pool.query(sql);
@@ -118,7 +118,7 @@ const getAllConfirmedTH = async() => {
     }
 }
 
-const getAllRecoveredTH = async() => {
+const getAllRecoveredTH = async () => {
     const sql = `select "3/23/20" as Confirmed from covid19_recovered_csv where "Country/Region" like 'Thailand'`
     try {
         const data = await pool.query(sql);
@@ -129,7 +129,7 @@ const getAllRecoveredTH = async() => {
     }
 }
 
-const getAllDeathTH = async() => {
+const getAllDeathTH = async () => {
     const sql = `select "3/23/20" as Confirmed from covid19_death_csv where "Country/Region" like 'Thailand'`
     try {
         const data = await pool.query(sql);
@@ -140,7 +140,7 @@ const getAllDeathTH = async() => {
     }
 }
 
-const getTotalConfirmTH = async() => {
+const getTotalConfirmTH = async () => {
     const sql = `select sum("3/23/20") as confirmed from covid19_confirmed_csv where "Country/Region" like 'Thailand'`
     try {
         const data = await pool.query(sql);
@@ -151,7 +151,7 @@ const getTotalConfirmTH = async() => {
     }
 }
 
-const getTotalRecoveredTH = async() => {
+const getTotalRecoveredTH = async () => {
     const sql = `select sum("3/23/20") as recovered from covid19_recovered_csv where "Country/Region" like 'Thailand'`
     try {
         const data = await pool.query(sql);
@@ -162,7 +162,7 @@ const getTotalRecoveredTH = async() => {
     }
 }
 
-const getTotalDeathTH = async() => {
+const getTotalDeathTH = async () => {
     const sql = `select sum("3/23/20") as death from covid19_death_csv where "Country/Region" like 'Thailand'`
     try {
         const data = await pool.query(sql);
@@ -173,7 +173,7 @@ const getTotalDeathTH = async() => {
     }
 }
 
-const getLatLongTH = async() => {
+const getLatLongTH = async () => {
     const sql = `select "Province/State" as State , "Country/Region" as Country, lat , long from covid19_death_csv where "Country/Region" like 'Thailand'`
     try {
         const data = await pool.query(sql);
@@ -184,8 +184,43 @@ const getLatLongTH = async() => {
     }
 }
 
-const Search = async(searchInfo) => {
-    const sql = `select * from covid19_confirmed_csv ccc where "Country/Region" like '%` + searchInfo + `%'`
+const Search = async (searchResult) => {
+
+    const sql = `select * from covid19_confirmed_csv ccc where "Country/Region" like '%${searchResult}%'`
+
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+}
+//countries
+const GetAllCountries = async () => {
+    const sql = `select "Province/State" as state, "Country/Region" as country, "3/23/20" as confirmed from covid19_confirmed_csv ccc where "lat" != 15 and "long" != 101 order by "Country/Region", "Province/State" asc`
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+}
+
+const GetAllCountriesRecovered = async () => {
+    const sql = `select "Province/State" as state, "Country/Region" as country, "3/23/20" as confirmed from covid19_recovered_csv ccc where "lat" != 15 and "long" != 101 order by "Country/Region", "Province/State" asc  `
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+}
+
+const GetAllCountriesDeath = async () => {
+    const sql = `select "Province/State" as state, "Country/Region" as country, "3/23/20" as confirmed from covid19_death_csv ccc where "lat" != 15 and "long" != 101 order by "Country/Region", "Province/State" asc`
     try {
         const data = await pool.query(sql);
         return data;
@@ -215,5 +250,9 @@ module.exports = {
     getLatLongTH,
 
     Search,
+
+    GetAllCountries,
+    GetAllCountriesRecovered,
+    GetAllCountriesDeath,
 
 }

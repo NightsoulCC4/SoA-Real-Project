@@ -1,6 +1,7 @@
-const getMap = (data) => {
+const getMap = (data, allcountries) => {
 
     const parseData = JSON.parse(data)
+    const parseCountries = JSON.parse(allcountries)
 
     var map = L.map('map').setView([15, 101], 1);
 
@@ -15,7 +16,10 @@ const getMap = (data) => {
                 fillColor: '#b30000',
                 fillOpacity: 0.5,
                 radius: 200000
-            }).addTo(map);
+            }).bindPopup(`<b>${parseCountries[key].state} </b><b>${parseCountries[key].country}</b>
+            <br>confirmed:${parseCountries[key].confirmed}
+            <br>recovered:${parseCountries[key].recovered}
+            <br>death:${parseCountries[key].death}`).addTo(map);
         }
         else if (parseData[key].value >= 5000) {
             L.circle([parseData[key].lat, parseData[key].long], {
@@ -23,7 +27,11 @@ const getMap = (data) => {
                 fillColor: '#f03',
                 fillOpacity: 0.5,
                 radius: 200000
-            }).addTo(map);
+            })
+            .bindPopup(`<b>${parseCountries[key].state} </b><b>${parseCountries[key].country}</b>
+            <br>confirmed:${parseCountries[key].confirmed}
+            <br>recovered:${parseCountries[key].recovered}
+            <br>death:${parseCountries[key].death}`).addTo(map);
         }
         else if (parseData[key].value < 5000 && parseData[key].value >= 500) {
             L.circle([parseData[key].lat, parseData[key].long], {
@@ -31,14 +39,24 @@ const getMap = (data) => {
                 fillColor: '#ffa64d',
                 fillOpacity: 0.5,
                 radius: 200000
-            }).addTo(map);
+            })
+            .bindPopup(`<b>${parseCountries[key].state} </b><b>${parseCountries[key].country}</b>
+            <br>confirmed:${parseCountries[key].confirmed}
+            <br>recovered:${parseCountries[key].recovered}
+            <br>death:${parseCountries[key].death}`)
+            .addTo(map);
         } else if (parseData[key].value < 500) {
             L.circle([parseData[key].lat, parseData[key].long], {
                 color: 'green',
                 fillColor: '#33cc33',
                 fillOpacity: 0.5,
                 radius: 200000
-            }).addTo(map);
+            })
+            .bindPopup(`<b>${parseCountries[key].state} </b><b>${parseCountries[key].country}</b>
+            <br>confirmed:${parseCountries[key].confirmed}
+            <br>recovered:${parseCountries[key].recovered}
+            <br>death:${parseCountries[key].death}`)
+            .addTo(map);
         }
     }
 }
